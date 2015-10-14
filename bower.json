@@ -1,0 +1,6 @@
+{
+  "name": "boilSth",
+  "dependencies": {
+   "jQuery": "2.1.4" 
+  }
+}
