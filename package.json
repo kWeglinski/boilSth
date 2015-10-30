@@ -13,5 +13,8 @@
     "gulp-plumber": "~1.0.1",
     "gulp-rename": "1.2.2",
     "colors": "1.1.2"
+  },
+  "dependencies": {
+    "imagemin": "~3.2.1"
   }
 }

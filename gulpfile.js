@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     rename = require('gulp-rename'),
     colors = require('colors'),
-    watch = require('gulp-watch');
+    watch = require('gulp-watch'),
+    Imagemin = require('imagemin');
 
 // your variables
 var projectName = "sampleapp";
@@ -94,11 +95,25 @@ gulp.task('watch', function () {
     });
 });
 
+gulp.task('compress-img', function(){
+  new Imagemin()
+      .src('_src/img/**/*.{gif,jpg,png,svg,JPG}')
+      .dest('_dist/img')
+      .use(Imagemin.jpegtran({progressive: true}))
+      .use(Imagemin.gifsicle({interlaced: true}))
+      .use(Imagemin.optipng({optimizationLevel: 3}))
+      .run(function (err, files) {
+          console.log(files[0]);
+          // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
+      });
+})
 gulp.task('build', function(){
     gulp.start('less');
     gulp.start('js');
     gulp.start('lib');
+    gulp.start('compress-img');
 })
+
 
 gulp.task('uikit-watch', function () {
     watch('./_src/_uikit/less/*.less', function () {
