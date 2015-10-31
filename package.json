@@ -1,5 +1,5 @@
 {
-  "name": "boilSth",
+  "name": "boilsth",
   "version": "1.0.0",
   "private": false,
   "devDependencies": {
@@ -17,5 +17,28 @@
   },
   "dependencies": {
     "imagemin": "~3.2.1"
+  },
+  "description": "Boilerplate for quick building websites.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sth-group/boilSth.git"
+  },
+  "keywords": [
+    "gulp",
+    "boilerplate",
+    "less",
+    "node",
+    "html",
+    "website",
+    "starter"
+  ],
+  "author": "Krzysztof Weglinski <krzysiek@csth.pl> (http://csth.pl/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/sth-group/boilSth/issues"
   }
 }
