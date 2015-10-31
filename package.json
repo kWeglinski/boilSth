@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "devDependencies": {
-    "gulp": "3.9.0",
+    "gulp": "~3.9.0",
     "gulp-less": "3.0.3",
     "gulp-minify-css": "1.1.0",
     "gulp-watch": "~4.3.4",
@@ -12,7 +12,8 @@
     "merge-stream": "^0.1.7",
     "gulp-plumber": "~1.0.1",
     "gulp-rename": "1.2.2",
-    "colors": "1.1.2"
+    "colors": "1.1.2",
+    "browser-sync": "~2.9.11"
   },
   "dependencies": {
     "imagemin": "~3.2.1"

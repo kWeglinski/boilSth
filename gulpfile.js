@@ -10,11 +10,11 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     colors = require('colors'),
     watch = require('gulp-watch'),
-    Imagemin = require('imagemin');
+    Imagemin = require('imagemin'),
+    browserSync = require('browser-sync').create();
 
 // your variables
 var projectName = "sampleapp";
-
 
 // notify on errors
 var onError = function (err) {
@@ -30,6 +30,17 @@ var onError = function (err) {
     this.emit('end');
 };
 
+gulp.task('js-watch', ['js'], browserSync.reload);
+gulp.task('less-watch', ['less'], browserSync.reload);
+
+gulp.task('serve', ['less'], function() {
+    browserSync.init({
+        server: "./_dist",
+        files: ["./_dist/css/*.css", "./_dist/js/*.js"]
+    });
+    gulp.start('watch');
+    gulp.watch("_dist/*.html").on('change', browserSync.reload);
+});
 
 // less task
 gulp.task('less', function () {
@@ -42,7 +53,8 @@ gulp.task('less', function () {
         }))
         .pipe(minifyCSS())
         .pipe(rename(projectName+'.min.css'))
-        .pipe(gulp.dest('./_dist/css'));
+        .pipe(gulp.dest('./_dist/css'))
+        .pipe(browserSync.stream());
 });
 
 // javascript concatenation and minification
@@ -55,8 +67,8 @@ gulp.task('js', function () {
         .pipe(uglify({
             mangle: false
         }))
-        .pipe(gulp.dest('./_dist/js'));
-
+        .pipe(gulp.dest('./_dist/js'))
+        .pipe(browserSync.stream());
 });
 
 //  concatenate your library. Insert it into array at
@@ -72,26 +84,14 @@ gulp.task('lib', function () {
         .pipe(gulp.dest('./_dist/js'));
 });
 
-//used to add new styles for UI KIT preview
-gulp.task('uikit', function () {
-    return gulp.src('./_src/_uikit/less/base.less')
-        .pipe(plumber({
-          errorHandler: onError
-        }))
-        .pipe(less({
-            paths: [path.join(__dirname, 'less', 'includes')]
-        }))
-        .pipe(minifyCSS())
-        .pipe(rename('uikit.min.css'))
-        .pipe(gulp.dest('./_src/_uikit/css/'));
-});
-
 gulp.task('watch', function () {
     watch('./_src/less/**/*.less', function () {
         gulp.start('less');
+        gulp.start('less-watch');
     });
     watch('./_src/js/**/*.js', function () {
         gulp.start('js');
+        gulp.start('js-watch');
     });
 });
 
@@ -107,6 +107,7 @@ gulp.task('compress-img', function(){
           // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
       });
 })
+
 gulp.task('build', function(){
     gulp.start('less');
     gulp.start('js');
@@ -115,6 +116,21 @@ gulp.task('build', function(){
 })
 
 
+
+
+//used to add new styles for UI KIT preview
+gulp.task('uikit', function () {
+    return gulp.src('./_src/_uikit/less/base.less')
+        .pipe(plumber({
+          errorHandler: onError
+        }))
+        .pipe(less({
+            paths: [path.join(__dirname, 'less', 'includes')]
+        }))
+        .pipe(minifyCSS())
+        .pipe(rename('uikit.min.css'))
+        .pipe(gulp.dest('./_src/_uikit/css/'));
+});
 gulp.task('uikit-watch', function () {
     watch('./_src/_uikit/less/*.less', function () {
         gulp.start('uikit');
