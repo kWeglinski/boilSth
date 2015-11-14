@@ -14,7 +14,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create();
 
 // your variables
-var projectName = "sampleapp";
+var projectName = "notesth";
 
 // notify on errors
 var onError = function (err) {
@@ -35,11 +35,11 @@ gulp.task('less-watch', ['less'], browserSync.reload);
 
 gulp.task('serve', ['less'], function() {
     browserSync.init({
-        server: "./_dist",
-        files: ["./_dist/css/*.css", "./_dist/js/*.js"]
+        server: "./",
+        files: ["./_dist/css/*.css", "./_dist/js/*.js", "./_dist/img/*.*"]
     });
     gulp.start('watch');
-    gulp.watch("_dist/*.html").on('change', browserSync.reload);
+    gulp.watch("*.html").on('change', browserSync.reload);
 });
 
 // less task
@@ -73,9 +73,15 @@ gulp.task('js', function () {
 
 //  concatenate your library. Insert it into array at
 // return gulp.src([ 'array elem', 'array elem' ])
+var libpath = './_src/lib/'
 gulp.task('lib', function () {
     return gulp.src([
-        './_src/lib/jQuery/dist/jquery.min.js'
+        libpath+'angular/angular.min.js',
+        libpath+'angular-cookies/angular-cookies.min.js',
+        libpath+'angular-route/angular-route.min.js',
+        libpath+'angular-local-storage/dist/angular-local-storage.min.js',
+        libpath+'d3/d3.min.js',
+        libpath+'angular-charts/dist/angular-charts.min.js'
     ])
         .pipe(plumber({
           errorHandler: onError

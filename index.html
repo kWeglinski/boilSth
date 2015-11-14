@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="noteSth">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pingSth</title>
+  <script src="../_dist/js/notesth-lib.min.js"></script>
+  <script src="../_dist/js/notesth.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="../_dist/css/notesth.min.css"></link>
+</head>
+
+<body ng-controller="base">
+  <div ng-show="usr.email" ng-include="'/views/parts/header.html'"></div>
+  <modal ng-show="modal" type="{{modal}}"></modal>
+
+  <div ng-view></div>
+</body>
+
+</html>
