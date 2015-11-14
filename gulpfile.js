@@ -11,8 +11,7 @@ var gulp = require('gulp'),
     colors = require('colors'),
     watch = require('gulp-watch'),
     Imagemin = require('imagemin'),
-    browserSync = require('browser-sync').create(),
-    modRewrite  = require('connect-modrewrite');
+    browserSync = require('browser-sync').create();
 
 // your variables
 var projectName = "notesth";
@@ -36,18 +35,11 @@ gulp.task('less-watch', ['less'], browserSync.reload);
 
 gulp.task('serve', ['less'], function() {
     browserSync.init({
-        server:  {
-            baseDir: './',
-            middleware: [
-                modRewrite([
-                    '!\.html|\.js|\.css|\.png|\.jpg|\.svg|\.woff$ /index.html [L]'
-                ])
-            ]
-        },
-        files: ["./_dist/css/*.css", "./_dist/js/*.js", "./_dist/img/*.*"],
+        server: "./",
+        files: ["./_dist/css/*.css", "./_dist/js/*.js", "./_dist/img/*.*"]
     });
     gulp.start('watch');
-    gulp.watch(['./*.html', './views/**/*.html']).on('change', browserSync.reload);
+    gulp.watch("*.html").on('change', browserSync.reload);
 });
 
 // less task
